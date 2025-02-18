@@ -109,30 +109,24 @@ public:
      * \param [in] n_keep       Number of elements to preserve in all rows of the matrix
      */
     void add_row(size_t row, int rank) { 
-        //std::cout << "rows_: " << rows_ << " row: " << row << "\n";
+        
         reshape((rows_ + 1), cols_);
 
         if ((row < rows_) && (row >= 0)) {
-            for (size_t row_idx = 0; row_idx < row; row_idx++) {
-                for (size_t col_idx = 0; col_idx < cols_; col_idx++) {
+            for (int row_idx = 0; row_idx < row; row_idx++) {
+                for (int col_idx = 0; col_idx < cols_; col_idx++) {
                     (*this)(row_idx, col_idx) = (*this)(row_idx, col_idx);
                 }
             }
 
-            //std::cout << "rank: " << rank << " vacancies_pos.print(): " << "\n"; 
-            //(*this).print();
-
-            for (size_t row_idx = (size_t)(rows_-2); row_idx > (size_t)(row-1); row_idx--) {
-                for (size_t col_idx = 0; col_idx < cols_; col_idx++) {
-                    //std::cout << "rank: " << rank << " row_idx: " << row_idx << "\n";    
-                    //std::cout << "rank: " << rank << " (*this).rows(): " << (*this).rows() << "\n";                
+            for (int row_idx = (int)(rows_-2); row_idx > (int)(row-1); row_idx--) {
+                for (int col_idx = 0; col_idx < cols_; col_idx++) {
                     (*this)((size_t)(row_idx+1), col_idx) = (*this)((size_t)(row_idx), col_idx);
                 }
             }
         }
         else {
             std::cout << "ERROR: Attempted to add row out of bounds for the matrix - row " << row << " on rank " << rank << "\n";
-            exit(0);
         }
     }
 
